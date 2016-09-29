@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+<link rel="stylesheet" type="text/css" href="../media/css/public.css">
+<link rel="stylesheet" type="text/css" href="../media/css/style.css">
+<link rel="stylesheet" type="text/css" href="../media/css/mdatetimer.css">
+
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<title>订单确认</title>
+<style type="text/css">
+.tijiao{
+	height:30px;
+	width:70px;
+	background-color:#F96C55;
+	border-radius:6px;
+	text-align:center;
+	line-height:30px;
+	color:white;
+	margin-left:70%;
+}
+</style>
+</head>
+	
+<body style="background:#fff;">
+	
+	<div class="confirm-head">订单确认</div>
+	<div class="prompt ts">提示：您的主食点了嘛？</div>
+	
+	<Ul class="confirm-ul">
+		<li><div class="add-bz">添加备注</div>备注:</li>
+		<li><select class="select"><option>是</option><option>否</option></select>是否打包</li>
+	</Ul>
+
+
+	
+	<div class="prompt">商家自助</div>
+	<div class="businesses ">
+		<div class="conf_list flex_box" id="city">
+			<span>省市区地址：</span>
+			<div class="conf_main flex_a">
+				<font>
+					<select class="prov"></select>
+				</font>
+				<font>
+					<select class="city"></select>
+				</font>
+				<font>
+					<select  class="dist"></select>
+				</font>
+			</div>
+		</div>	
+		<div class="conf_list flex_box">
+			<span>店&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>
+			<div class="conf_main flex_a">
+				<input type="text" class="conf_input dianming" placeholder="必填" />
+			</div>
+		</div>	
+
+		<div class="conf_list flex_box">
+			<span>联&nbsp;&nbsp;&nbsp;系&nbsp;&nbsp;&nbsp;人：</span>
+			<div class="conf_main flex_a">
+				<input type="text" class="lianxiren" placeholder="必填" />
+			</div>
+		</div>	
+
+		<div class="conf_list flex_box">
+			<span>电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话：</span>
+			<div class="conf_main flex_a">
+				<input type="text" class="dianhua" placeholder="必填" />
+			</div>
+		</div>	
+
+		<div class="conf_list flex_box">
+			<span>配&nbsp;送&nbsp;时&nbsp;间：</span>
+			<div class="conf_main flex_a">
+				<input type="text" id="picktime" value="2015-07-01" readonly />
+			</div>
+		</div>	
+		<div class="conf_list flex_box"><div class="tijiao">提交</div></div>
+		
+
+
+	</div>
+
+	<div class="prompt">金香饭饭</div>
+	<div class="foot-table">
+		<table cellspacing="0" cellpadding="0" width="100%">
+			<tr>
+				<th width="50%" align="left">菜名</th><th width="20%">单价</th><th width="15%">数量</th><th width="15%">总价</th>
+			</tr>
+			<tr>
+				<td>鲜肉小包</td><td>6元</td><td>1</td><td>6元</td>
+			</tr>
+			<tr>
+				<td>鲜肉小包</td><td>6元</td><td>1</td><td>6元</td>
+			</tr>
+
+		</table>
+	</div>
+
+<script type="text/javascript" src="../media/js/zepto.min.js"></script>
+<script type="text/javascript" src="../media/js/cityselect.js"></script>
+
+<script type="text/javascript" src="../media/js/mdatetimer.js"></script>
+
+
+
+<script type="text/javascript">
+	$(function(){
+		$("#city").citySelect({
+	    	prov:"湖南", 
+	    	city:"长沙",
+			dist:"岳麓区",
+			nodata:"none"
+
+		}); 
+
+
+		$('#picktime').mdatetimer({
+			mode : 3, //时间选择器模式：1：年月日，2：年月日时分（24小时），3：年月日时分（12小时），4：年月日时分秒。默认：1
+			format : 2, //时间格式化方式：1：2015年06月10日 17时30分46秒，2：2015-05-10  17:30:46。默认：2
+			years : [2000, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017], //年份数组
+			nowbtn : true, //是否显示现在按钮
+			onOk : function(){
+				//alert('OK');
+			},  //点击确定时添加额外的执行函数 默认null
+			onCancel : function(){
+				
+			}, //点击取消时添加额外的执行函数 默认null
+		});	
+
+	});
+
+</script>	
+	<script type="text/javascript">
+$(function(){ 
+	var bol1 = false;
+	var bol2 = false;
+	var bol3 = false;
+// 	/[\u4e00-\u9ef8]/
+	$(".dianming").blur(function(){
+		var dianming = /[\u4e00-\u9ef8]/;
+		if(dianming && dianming.test(this.value)){
+			$(this).css({"border-color":""});
+			bol1 = true;
+		}else{
+			$(this).css({"border-color":"red"});
+			bol1 = false;
+		}
+	});
+	$(".lianxiren").blur(function(){
+		var lianxiren = /[\u4e00-\u9ef8]/;
+		if(lianxiren && lianxiren.test(this.value)){
+			$(this).css({"border-color":""});
+			bol2 = true;
+		}else{
+			$(this).css({"border-color":"red"});
+			bol2 = false;
+		}
+	});
+	$(".dianhua").blur(function(){
+		var dianhua = /^1[34578]\d{9}$/;
+		if(dianhua && dianhua.test(this.value)){
+			$(this).css({"border-color":""});
+			bol3 = true;
+		}else{
+			$(this).css({"border-color":"red"});
+			bol3 = false;
+		}
+	});
+    $(".tijiao").on("click",tijiao);
+
+function tijiao(){
+	if(bol1 && bol2 && bol3){
+        plush();
+        /* shangchuan(); */
+    }
+}
+
+function plush(){
+	confirm("成功");
+}
+
+});
+/* function shangchuan(){
+	$.ajax({ 
+	  type: 'POST', 
+	  url: 'data.php', 
+	  dataType: 'json', 
+	  cache: false,
+	  data:{
+		  p:$(".prov").val(),
+          c:$(".city").val(),
+          d:$(".dist").val(),
+	      dm:$(".dianming").val(),
+	      l:$(".lianxiren").val(),
+	      dh:$(".dianhua").val(),
+	      pk:$("#picktime").val()
+	  },
+	  error: function(){ 
+	      alert('出错了！'); 
+	      return false; 
+	  }
+	}); 
+} */
+</script>
+</body>
+</html>

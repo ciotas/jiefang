@@ -1,0 +1,14 @@
+<?php 
+define('PRINT_DOCUMENT_ROOT', str_replace('\\', '/', dirname(__FILE__)).'/');//文件目录
+define("LASTTIME", PRINT_DOCUMENT_ROOT."lasttime");
+$square100="@!100square";
+$square50="@!50square";
+//IP和端口不需要更改
+define('IP','printer.meijiemall.com');
+define('PORT',8080);
+define('HOSTNAME','/WPServer');
+$phonekey = "seals5kn";
+$pwdkey="pards31r";
+$advbaseurl="http://shop.meijiemall.com/printbill/interface/getadvpage.php";
+$root_url="http://shop.meijiemall.com/";
+?>

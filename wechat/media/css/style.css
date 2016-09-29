@@ -1,0 +1,13 @@
+
+.flex_box{display:box;display:-webkit-box;display:-moz-box;}
+.flex_a{box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;}
+
+.businesses{padding:10px 0;}
+.conf_list{padding:5px 10px;}
+.conf_list span{height:25px;line-height:25px;display: block;width:80px;text-align:left;font-size:13px;}
+.conf_main{padding-left:10px;}
+.conf_main font{display:block;height:25px;width:33.3%;padding-right:3px;box-sizing: border-box;float: left;}
+.conf_main font:last-child{padding-right:0;}
+.conf_main font select{ width:100%; height:25px;border:1px solid #ccc;}
+
+.conf_main input[type="text"]{border:1px solid #ccc;width:100%;box-sizing: border-box; height:25px; line-height:25px;}

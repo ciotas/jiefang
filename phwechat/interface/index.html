@@ -1,0 +1,345 @@
+<?php 
+require_once ('/var/www/html/global.php');
+require_once (_ROOT.'wechat/Factory/BLLFactory.php');
+class Menu{
+	
+}
+$menu=new Menu();
+if(isset($_REQUEST['shopid'])){
+	$shopid=$_REQUEST['shopid'];
+	$uid=$_REQUEST['uid'];
+	$tabid=$_REQUEST['tabid'];
+	
+}
+$uid="554ad8cc5bc109d7518b45b5";
+$tabid="554addb25bc109dd518b45c1";
+$shopid="554ad9615bc109d8518b45d2";
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    
+ <meta charset="utf-8"/>
+ <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+ <link rel="stylesheet" type="text/css" href="../media/css/public.css">
+ <meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<title>京香饭饭</title>
+</head>
+	
+<body>
+<div class="header">京香饭饭</div>
+
+<div class="main">
+	<div class="eat-title">
+		<ul></ul>
+	</div>
+ 	<div class="eat-count">
+		<div class="count-top">早餐供应</div>
+		<div class="items" >
+			<div class="wrapper"></div>
+		</div>
+	</div>	
+</div>
+
+<div class="fixnav" id="fixnav">
+     <div class="fixnav_add" id="fixnav_add"></div>
+</div>
+
+
+<div class="cartMask none">
+    <div class="J_cart">
+        <h3>购物车<i>◆</i></h3>
+
+        <div class="J_cartinfo">
+            <div class="food-info">
+                <ul></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-bottom none">
+        <div class="d-ib v-m view-selected">
+            <div class="cart d-ib v-m on">
+                <span class="total">0</span>
+            </div>
+            <span class="totalPrice d-ib v-m">￥0</span>
+        </div>
+        <div class="payButton">选好了</div>
+    </div>
+
+</body>
+</html>
+
+<script type="text/javascript" src="../media/js/zepto.min.js"></script>
+<script type="text/javascript" src="../media/js/common.js"></script>
+
+<!-- <script type="text/javascript" src="../media/js/main.js"></script> -->
+<script type="text/javascript" src="../media/foodjs/554ad9615bc109d8518b45d2.js"></script>
+<script type="text/javascript" src="../media/js/assign.js"></script>
+<script type="text/javascript">
+	(function () {
+		var $foodCategory=$(".wrapper .lists");
+		var max =$foodCategory.length - 1;
+
+        var $foodCategroyLast = $foodCategory.eq(max);
+
+        var height = $(".eat-count").height();
+
+        var lastHeight = $foodCategroyLast.height();
+
+        var pb = height - lastHeight;
+        
+        var scrollMenu =Utils.throttle(function () {
+        	var sTop = $(".items").scrollTop();
+          		for(var i=0;i<$foodCategory.length;i++){
+				var $category = $foodCategory.eq(i);
+                if (!$category || !$category.position()){
+                	break;	
+                } 
+                var pTop = $category.position().top;
+              	var nTop = i < max ? $category.next().position().top : $(".wrapper").height();
+              	if (sTop >= pTop && sTop < nTop) {
+                	$(".count-top").text($category.find(".items-top").text());
+                    var $activeMemuCategory = $(".eat-title li").eq(i).addClass("active");
+                    $activeMemuCategory.siblings().removeClass("active");
+                	var activeMemuCategory = $activeMemuCategory[0];
+                    activeMemuCategory[activeMemuCategory.scrollIntoViewIfNeeded ? "scrollIntoViewIfNeeded" : "scrollIntoView"]();
+                    break
+                }
+            }    
+        },50);
+
+        $(".eat-title").on("click",".menu-left-list",function(e){
+        	var $me = $(this).addClass("active");
+			$me.siblings().removeClass("active");
+			$foodCategory.eq($me.index())[0].scrollIntoView(true)
+		});
+         
+        $(".items").on('scroll', scrollMenu);
+		var shoopNumber=0;  //总共数量
+        var foodList=[];
+        $(".totle").click(function(){
+			var obj={};
+			var json={};
+			var foodId=$(this).parents("li").data("type");  //美食id
+			var foodName=$(this).parents("li").find(".shoop-name").text();  ///美食名称
+			var $value=parseInt($(this).hide().next().show().find(".number").text())+1;  //美食数量
+			var foodPrice=$(this).parents("li").find(".price em").text();  //获取价格
+			var foodUnit=$(this).parents("li").find("i").text();   //美食的单位
+			$(this).next().find(".number").text($value);
+			
+
+			json.foodId=foodId;
+			json.foodName=foodName;
+			json.foodNum=$value;
+			json.foodPrice=foodPrice;
+			json.foodUnit=foodUnit;
+			obj[foodId]=json;
+			foodList.push(obj);
+
+			var moudeIndex=$(this).parents(".lists").index();  //获得当前模块的索引值
+			var $mengSpan=$(".eat-title ul li").eq(moudeIndex).find("span");
+			$mengSpan.text(parseInt($mengSpan.text())+1);
+			if($mengSpan.text()>0){
+				$mengSpan.show();
+			}else{
+				$mengSpan.hide();
+			}
+			
+			shoopNumber=shoopNumber+1;  //总数量
+			
+			totle(shoopNumber,foodList);
+
+		});
+        /*加上*/
+		$(".plus").live("click",function(e){
+			var foodId=$(this).parents("li").data("type");  //美食id
+			var foodName=$(this).parents("li").find(".shoop-name").text();  //美食名称
+			var $value=parseInt($(this).prev().text())+1; //美食数量
+			var foodPrice=$(this).parents("li").find(".price em").text(); //美食价格
+			var foodUnit=$(this).parents("li").find("i").text();   //美食的单位
+			
+			for(var i=0;i<foodList.length;i++){
+				for(var key in foodList[i]){
+					if(key==foodId){
+						foodList[i][key].foodNum=$value;
+					}
+				}
+			}
+			$('li[data-type="'+foodId+'"]').find(".number").text($value);
+			
+			shoopNumber=shoopNumber+1;  //总数量
+			
+			totle(shoopNumber,foodList);
+			//StoreData(foodId,$value,"add");//缓存
+		});
+			/*减去*/
+		$(".food-minus").live("click",function(){
+			var foodId=$(this).parents("li").data("type");  //美食id
+			var foodName=$(this).parents("li").find(".shoop-name").text();  ///美食名称
+
+			var $value=parseInt($(this).next().text())-1;  //美食数量
+			
+			var foodPrice=$(this).parents("li").find(".price em").text();     //美食价格
+			var foodUnit=$(this).parents("li").find("i").text();   //美食的单位
+			
+		 //	var moudeIndex=$(this).parents(".lists").index();  //获得当前模块的索引值
+
+		//	var moudeIndex=$(this).parents("li").data("type");
+		//	console.log(moudeIndex);
+			
+			var moudeIndex=$('.wrapper li[data-type="'+foodId+'"]').parents(".lists").index();
+			
+			var $mengSpan=$(".eat-title ul li").eq(moudeIndex).find("span")
+			
+			if(!$value){
+				$('li[data-type="'+foodId+'"]').find(".number").text($value);
+				for(var i=0;i<foodList.length;i++){
+						for(var key in foodList[i]){
+						if(key==foodId){
+							foodList.splice(i,1);
+							break;
+						}
+					}
+				}
+				
+				$('li[data-type="'+foodId+'"]').find(".add").hide().prev().show();
+
+				var moudeValue=parseInt($mengSpan.text())-1;
+				
+				$mengSpan.text(moudeValue);
+
+				if(!moudeValue){
+
+					$mengSpan.hide();
+				}
+			}else{
+
+				for(var i=0;i<foodList.length;i++){
+					for(var key in foodList[i]){
+						if(key==foodId){
+							foodList[i][key].foodNum=$value; //只需要改变美食的数量就行
+						}
+					}
+				}
+				$('li[data-type="'+foodId+'"]').find(".number").text($value);	
+			}
+
+			shoopNumber=shoopNumber-1;
+			totle(shoopNumber,foodList);
+			//StoreData(foodId,$value,"minus");//缓存
+		});
+
+		function StoreData(foodid,foodnum,type){
+			//alert(foodnum)
+    		 onefood={};
+    		 onefood.foodid=foodid;
+    		 onefood.foodnum=foodnum;
+    		 food={};
+    		 if(sessionStorage.food){
+    			 food=sessionStorage.getItem("food");			
+    			 food=JSON.parse(food)
+    			 if(food[foodid]!=null &&food[foodid]!="" ){
+    				 if(type=="add"){
+    					 food[foodid]['foodnum']+=1;
+    				 }else if(type=="minus"){
+    					 food[foodid]['foodnum']-=1;
+    				 }
+    			 }else{
+    				 food[foodid]=onefood;
+    			 }
+    			 console.log(food);
+    			 sessionStorage.setItem("food",JSON.stringify(food))
+    		 }else{			
+    			 food[foodid]=onefood;
+    			 console.log(JSON.stringify(food));
+    			 sessionStorage.setItem("food",JSON.stringify(food))
+    		 }
+		}
+		
+		function totle(number,foodList){
+			if(!foodList.length){
+				$(".cartMask").hide();
+				$(".main-bottom").hide();
+			}
+			
+			var shoopMondy=0;//防止总的价钱重叠
+			
+			if(number>0){
+				$(".main-bottom").show();
+				$(".total").text(number);
+			}else{
+				$(".main-bottom").hide();	
+				$(".total").text(0);
+			}
+			var html="";
+			$(".food-info ul").remove();
+			html+="<ul>"
+			for(var i=0;i<foodList.length;i++){
+				for(var key in foodList[i]){
+					var foodPrice=foodList[i][key].foodPrice;
+					var foodNum=foodList[i][key].foodNum;
+					var foodTotle=foodPrice*foodNum;
+					shoopMondy=shoopMondy+foodTotle;
+
+					html+='<li data-type='+foodList[i][key].foodId+'><div class="food-name">'+foodList[i][key].foodName+'</div>'+
+            		'<div class="food-price">￥'+foodPrice+'</div>'+
+            		'<div class="adder add"><span class="minus food-minus"></span><span class="number">'+foodNum+'</span><span class="minus plus">'+
+            		'</span></div></li>';
+				}
+			}
+
+			html+="</ul>"
+			$(".food-info").append(html);
+			$(".totalPrice").text("￥"+shoopMondy.toFixed(2));
+		
+		}
+		
+		$(".payButton").on("click",function(){			
+			$.ajax({
+				url:"<?php echo _ROOTURL;?>printbill/interface/predownbill.php",
+				type:"POST",
+				data:{
+					'food':JSON.stringify(foodList),
+					'shopid':'<?php echo $shopid;?>',
+					'uid':'<?php echo $uid;?>',
+					'tabid':'<?php echo $tabid;?>',
+					'orderno':'<?php echo date("YmdHis",time()).mt_rand(1000, 9999);?>',
+				},
+				success:function(data){
+// 					console.log(data);
+					data=JSON.parse(data);
+					window.location.href = 'pay.php?billid='+data.billid;
+				},
+				error:function(){
+					
+				}
+
+			});
+		
+		})
+		
+		/*点击购物车*/
+		$(".cart").on("click",function(){
+			$(".cartMask").toggle();
+
+			/*var $jCart=$(".J_cart").height();
+			var $mainBottom=$('.main-bottom').height();
+
+			$(this).css("bottom",$jCart+$mainBottom+20);
+
+			$(this).next().addClass("pl")
+*/
+
+			
+			//$(this).addClass("carter");
+		});
+
+		
+		/*跳到历史订单页面去*/
+		$("#fixnav_add").on("click", function () {
+            window.location.href = 'historyorder.html'
+        });
+	})();
+</script>

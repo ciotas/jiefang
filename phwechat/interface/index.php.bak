@@ -1,0 +1,234 @@
+<?php
+require_once ('/var/www/html/global.php');
+require_once (_ROOT.'wechat/Factory/BLLFactory.php');
+
+define("TOKEN", "jiefang0927");
+
+class IndexClass{
+    //formal
+    private $appid = "wxc5b83fb82bad0b65";
+    private $appsecret = "75986a12121b79e429e8b359aa8aab0a";
+    public function index(){
+        if(isset($_GET['echostr'])){
+            $this->valid();
+        } else {
+            $this->responseMsg();
+        }
+    }
+    private function valid(){
+        $echo_str = $_GET['echostr'];
+        if($this->checkSignature()){
+            echo $echo_str;
+            exit;
+        }
+    }
+
+    private function checkSignature(){
+        $signature = $_GET['signature'];
+        $timestamp = $_GET['timestamp'];
+        $nonce = $_GET['nonce'];
+        $token = TOKEN;
+        $tmp_array = array($token, $timestamp, $nonce);
+        sort($tmp_array);
+        $tmp_str = implode($tmp_array);
+        $tmp_str = sha1($tmp_str);
+        if($tmp_str == $signature){
+                return true;
+        } else {
+                return false;
+        }
+    }
+
+    public function responseMsg(){
+            //$post_str = $GLOBALS['HTTP_RAW_POST_DATA'];
+            $post_str = isset($GLOBALS['HTTP_RAW_POST_DATA'])?$GLOBALS['HTTP_RAW_POST_DATA']:file_get_contents("php://input");
+            if(!empty($post_str)){
+                $post_obj = simplexml_load_string($post_str, 'SimpleXMLElement', LIBXML_NOCDATA);
+                $RX_TYPE = trim($post_obj->MsgType);
+                $result = "";
+                switch ($RX_TYPE)
+                {
+                    case "event":
+                    $result = $this->receiveEvent($post_obj);
+                    break;
+                    case "text":
+                    $result = $this->transmitText($post_obj, "Text");
+                    break;
+                }
+                echo $result;
+            } else {
+                echo "";
+                exit;
+           }
+    }
+
+    private function receiveEvent($object)
+    {
+        $contentStr = "";
+        switch ($object->Event) {
+        case "subscribe":
+            $contentStr = "欢迎关注食趣点餐!";
+            $resultStr = $this->transmitText($object, $contentStr);
+            break;
+        case "LOCATION":
+            $str = "openid:" . $object->FromUserName . ", 纬度:" . $object->Latitude . ", 经度:" . $object->Longitude;
+            write_logs($str);
+            //$this->saveUserGpsInfo((string)$object->FromUserName, (string)$object->Latitude, (string)$object->Longitude);
+            break;
+        case "CLICK":
+
+            if ($object->EventKey=="V1000_NOPAY_MENU"){
+                $openid = (string)$object->FromUserName;
+                $condition = array('openid'=>$openid);
+                //$res = M('wechat_user_info')->where($condition)->select();
+                //if($res == false){
+                //    write_logs($openid." has no openid in table!");
+                //    return;
+                //}
+                //$uid = $res[0]['uid'];
+                //$resultStr = $this->userOrder($uid);
+                //$resultStr = $this->transmitText($object, $resultStr);
+            }else if ($object->EventKey=="V1000_BIND_MENU"){
+                $openid = (string)$object->FromUserName;
+                $condition = array('openid'=>$openid);
+                //$res = M('wechat_user_info')->where($condition)->select();
+                //if($res == false){
+                //    write_logs($openid." has no openid in table!");
+                //    return;
+                //}
+                //$uid = $res[0]['uid'];
+                //$resultStr = $this->userBind($uid);
+                //$resultStr = $this->transmitText($object, $resultStr);
+            }
+            break;
+        default:
+            break;
+        }
+        return $resultStr;
+    }
+
+    private function receiveText($object)
+    {
+        $to_username = $object->FromUserName;
+        $from_username = $object->ToUserName;
+        $keyword = trim($object->Content);
+        $time = time();
+        $text_tpl = "<xml><ToUserName><![CDATA[%s]]></ToUserName><FromUserName><![CDATA[%s]]></FromUserName><CreateTime>%s</CreateTime><MsgType><![CDATA[%s]]></MsgType><Content><![CDATA[%s]]></Content><FuncFlag>0</FuncFlag></xml>";
+        if('a' == $keyword){
+            $msg_type = "text";
+            $content_str = date("Y-m-d H:i:s", time());
+            $result_str = sprintf($text_tpl, $to_username, $from_username, $time, $msg_type, $content_str);
+            echo $result_str;
+        }
+    }
+
+    public function authorizeCode(){
+        echo 'aaaaaa23';
+        $appid = $this->appid;
+        $appsecret = $this->appsecret;
+
+        $code = '';
+        $this->write_logs("[authorizeCode]: code=".$code);
+        if(isset($_GET['code'])){
+            $code = $_GET['code'];
+            $this->write_logs("[authorizeCode]: code=".$code);
+        } else {
+            $this->write_logs("[authorizeCode]: get code error!");
+        }
+
+        $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=${appid}&secret=${appsecret}&code=${code}&grant_type=authorization_code";
+        echo $url;
+        $tokens = getGetRequest($url);
+        if(array_key_exists('errcode', $tokens)){
+            $this->write_logs("[authorizeCode]: ".json_encode($tokens));
+            return;
+        }
+        $access_token = $tokens['access_token'];
+        $refresh_token = $tokens['refresh_token'];
+        $openid = $tokens['openid'];
+        if(!$access_token){
+            $url = "https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=${appid}&grant_type=refresh_token&refresh_token=${refresh_token}";
+            $ref_token = getGetRequest($url);
+            $access_token = $ref_token['access_token'];
+        }
+        $url = "https://api.weixin.qq.com/sns/userinfo?access_token=${access_token}&openid=${openid}&lang=zh_CN";
+        $info = getGetRequest($url);
+        $this->write_logs("[authorizeCode]: data=".json_encode($info));
+        $condition = array('openid'=>$info['openid']);
+        //$result = $this->db_info->where($condition)->select();
+        $uid = '';
+        /*
+        if($result == false){
+            $data = array();
+            $data['openid'] = $info['openid'];
+            $data['nickname'] = $info['nickname'];
+            $data['sex'] = $info['sex'];
+            $data['language'] = $info['language'];
+            $data['province'] = $info['province'];
+            $data['city'] = $info['city'];
+            $data['headimgurl'] = $info['headimgurl'];
+            $data['privilege'] = $info['privilege'];
+            $data['timestamp'] = time();
+            $uidval = $this->userLoginInfo($data);
+            write_logs("[authorizeCode]: uidinfo=".$uidval);
+            $uidval = json_decode($uidval, true);
+            $data['uid'] = $uidval['uid'];
+            $uid = $data['uid'];
+            $result = $this->db_info->add($data);
+        } else {
+            $condition = array('openid'=>$info['openid']);
+            $res = $this->db_info->where($condition)->select();
+            $uid = $res[0]['uid'];
+            write_logs("[authorizeCode]: uid=".$uid);
+        }
+         */
+        $type = isset($_GET['type']) ? $_GET['type'] : '';
+        $shopid = isset($_GET['shopid']) ? $_GET['shopid'] : '';
+        $tabid= isset($_GET['deskno']) ? $_GET['deskno'] : '';
+        if ($type === "takeout" || $type === "inhouse"){
+            $url = $this->url."/index.php?m=Admin&c=Index&a=typeDetail&type=$type&shopid=$shopid&uid=".$uid."&tabid=".$tabid;
+
+        } else if($type === "myorder"){ 
+            $url = $this->dataapi."/houtai/shop/mybills.php?uid=$uid&shopid=$shopid";
+            $this->write_logs("[authorizeCode]: redirect_url=".$url);
+            $this->write_logs("[authorizeCode]: redirect_url=".$url);
+        }elseif($type=="store"){
+            $url = $this->dataapi."/weshop/shopindex.php?uid=$uid&shopid=$shopid&type=$type";
+            $this->write_logs("[authorizeCode]: redirect_url=".$url);
+        }elseif($type=="book"){
+            $url = $this->dataapi."/houtai/shop/bookinfo.php?uid=$uid&shopid=$shopid";
+            $this->write_logs("[authorizeCode]: redirect_url=".$url);
+        }
+        header("location: ".$url);
+    }
+    private function getGetRequest($url = ''){
+        $curl = curl_init(); // 启动一个CURL会话
+        curl_setopt($curl, CURLOPT_URL, $url); // 要访问的地址
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0); // 对认证证书来源的检查
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0); // 从证书中检查SSL加密算>法是否存在
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); // 获取的信息以文件流的形式返回
+        $data = curl_exec($curl); // 执行操作
+        if (curl_errno($curl)) {
+            echo 'Errno: '.curl_error($curl);//捕抓异常
+        }
+        curl_close($curl); // 关闭CURL会话
+        $jsoninfo = json_decode($data,true); // 返回数据
+        return $jsoninfo;
+    }
+    public function write_logs($content=''){
+        $date = date('Y-m-d');
+        $time = date('Y-m-d H:i:s');
+        $path = '/data/www/logs/'.$date.'.log';
+        $str = $time.': '.$content.PHP_EOL;
+        file_put_contents($path, $str, FILE_APPEND);
+    }
+}
+//
+echo "hello world";
+//
+$inst = new IndexClass();
+//$inst->write_logs('aaaaaaaaaaaaa');
+echo "hello world123";
+$inst->authorizeCode();//index();
+
+?>

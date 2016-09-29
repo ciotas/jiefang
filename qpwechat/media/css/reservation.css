@@ -1,0 +1,257 @@
+*{
+	margin:0;
+	padding:0;
+}
+button{
+	border:none;
+	outline: none;
+}
+.part1r{
+	width:16rem;
+	background-color:#ebe6e3;
+	overflow: hidden;
+	color:#333;
+	/*display: none;*/
+}
+/*左边*/
+.part1r .box1r{
+	width:4rem;
+	float:left;
+	height:100%;
+	overflow: scroll;
+}
+.box1r div{
+	width:100%;
+	height:2.3rem;
+	border-bottom:1px solid #999;
+	line-height: 2.3rem;
+	text-align: center;
+	font-size: 1rem; 
+}
+.box1r div span{
+	height:2.3rem;
+	font-size: 1.1rem;
+}
+/*右边*/
+.part1r .box2r{
+	width:12rem;
+	background-color: #fff;
+	float:left;
+	height:100%;
+	overflow: scroll;
+}
+/*列表*/
+.box2r>div{
+	display: none;
+}
+.box2r>div>div{
+/*	width: 90%;*/
+    height: 3.5rem;
+    background-color: #ebe6e3;
+    margin: 14px 5%;
+}
+.tupianr{
+	width:30%;
+	height:3.5rem;
+	background-size: 100% 100%;
+	float: left;
+}
+.wenzir{
+	width:70%;
+	height:3.5rem;
+	float:left;
+	position: relative;
+}
+.xiangqingr{
+	position: absolute;
+	height:2rem;
+	top:0.7rem;
+	text-indent: 0.2rem;
+	line-height: 1.2rem;
+}
+.numr{
+	font-size: 0.9rem;
+	color:#333;
+}
+.jiager{
+	color:#ef4842;
+	font-size: 0.7rem;
+}
+.yuyuer,.yuyuers{
+	color:#fff;
+	background-color: #ef4744;
+	position: absolute;
+	top:1rem;
+	right:0.4rem;
+	height:1.5rem;
+	border-radius: 6px;
+	line-height: 1.5rem;
+	font-size:0.8rem;
+	padding:0 0.4rem;
+}
+.yuyuers{
+	background-color: #5d5d5d;
+	display: none;
+}
+/*第二部分*/
+.part2r{
+	width:16rem;
+	background-color:#ebe6e3;
+	overflow: hidden;
+	color:#333;
+	display: none;
+}
+.num2r,.date2r,.time2r,.phone2r,.zhifu2r{
+	width:100%;
+	background-color: #fff;
+	margin-top:0.5rem;
+	box-sizing: border-box;
+	position: relative;
+}
+.part2r .num2r{
+	height:3rem;
+	text-indent: 1rem;
+	color:#ef4744;
+	line-height: 3rem;
+}
+.part2r .date2r{
+	height:5rem;
+	
+}
+.date2s{
+	position: absolute;
+	width:1rem;
+	height:1rem;
+/*	background-color: yellow;*/
+	left: 1rem;
+	top:1.1rem;
+	background-size: 100% 100%;
+}
+.date2es{
+	position: absolute;
+	font-size: 0.8rem;
+	top:1.2rem;
+	left:2.5rem;
+}
+.date2ss{
+	position: absolute;
+	height:1.5rem;
+	width:88%;
+	border:1px solid #999;
+	top:2.5rem;
+	left: 1rem;
+	font-size: 0.8rem;
+	outline: none;
+	text-indent:0.2rem;
+	color:#333;
+}
+.part2r .time2r{
+	height:7rem;
+}
+.time2s{
+	position: absolute;
+	height:3.5rem;
+	width:90%;
+	top:2.5rem;
+	left:1rem;
+}
+.time2s>div{
+	height:3.5rem;
+	width:32%;
+	float: left;
+	margin-left: 1%;
+	border: 1px solid #999;
+	color:#333;
+	box-sizing: border-box;
+}
+.time2s>div>div{
+	width:100%;
+	line-height: 1rem;
+	font-size: 0.7rem;
+	text-align: center;
+}
+.part2r .time2r .time2s .acts{
+	background-color: #ef4744;
+	color:#fff;
+	border: 1px solid #ef4744;
+}
+
+.part2r .phone2r{
+	height:5.2rem;	
+}
+.phone2r .phone2ss{
+	position: absolute;
+    font-size: 0.8rem;
+    top: 2.5rem;
+    left: 1.2rem;
+    text-indent: 0.3rem;
+    border:1px solid #DCD6D6;
+    color: #333;
+	height:1.5rem;
+	outline:none;
+}
+.part2r .zhifu2r{
+	height:3rem;
+	background-color: #ef4744;
+	outline:none;
+	border: none;
+	color:#fff;
+	font-size: 1.2rem;
+	margin-top:0;
+}
+.num2r_ad{
+	position:absolute;
+    width: 20px;
+    height: 25px;
+	top:36%;
+	right:10%;
+	background:url('http://jiefang-img.oss-cn-hangzhou.aliyuncs.com/hyp/try.png');
+	background-size:100% 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

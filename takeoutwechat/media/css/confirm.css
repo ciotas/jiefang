@@ -1,0 +1,124 @@
+    .main_cf{
+	   width:100%;
+	   height:16%;
+	   background:#F3F3F3;
+    }
+    .bianji_all{
+	   width:100%;
+	   height:90%;
+	   background:#fff;
+	   padding:3% 4%;
+	   box-sizing: border-box;
+	   display:block;
+	   position:relative;
+    }
+    .contact_cf{
+	   overflow:hidden;
+	   line-height:26px;
+	   width:60%;
+    }
+    .contact_db{
+	   float:left;
+	   font-size: 21px;
+	   font-weight: bold;
+    }
+    .phone_db{
+	   float:left;
+	   line-height:2%;
+	   line-height: 30px;
+	   text-indent:1rem;
+    }
+    .bianji_ad{
+	    display: block;
+        width: 20px;
+        height: 25px;
+    	position:absolute;
+    	top:36%;
+    	right:10%;
+    	background:url('http://jiefang-img.oss-cn-hangzhou.aliyuncs.com/hyp/try.png');
+    	background-size:100% 100%;
+    }
+/*     .bianji_ad:before{
+	    content: "";
+        display: block;
+        width: 12px;
+        height: 12px;
+        margin-left: 0;
+        border: 2px solid #c7c7cc;
+        border-top: 0 none;
+        border-left: 0 none;
+    	transform: rotate(315deg);
+    } */
+    .xuanze_all{
+	   width:100%;
+	   height:90%;
+	   background:#fff;
+	   padding:4%;
+	   box-sizing: border-box;
+	   display:none;
+    }
+    .address_cf{
+	   width:60%;
+	   height:90%;
+	   color:orange;
+	   line-height:20px;
+	   margin-top:3%;
+    }
+    .icon_cf{
+	   display:inline-block;
+	   height:20px;
+	   width:20px;
+	   border:1px solid orange;
+	   border-radius:50%;
+	   text-align:center;
+	   line-height:23px;
+	   font-size:23px;
+	   color:orange;
+    }
+    .dizhi_ad{
+	   display:none;
+	   position:absolute;
+	   width:100%;
+	   height:100%;
+	   top:0px; 
+	   left:0px;
+	   z-index:10;
+    }
+    .bg_cf{
+	   position:absolute;
+	   width:100%;
+	   height:100%;
+	   background:black;
+	   opacity:0.8;
+	   top:0;
+	   left:0;
+	   z-index:-1;
+    }
+    .btn_cf{
+	   width:80%;
+	   height:35px;
+	   margin-top:20%;
+	   margin-left:10%;
+    }
+    .quxiao_ad{
+	   width:40%;
+	   height:100%;
+	   border:none;
+	   border-radius:6px;
+	   color:#fff;
+	   text-align:center;
+	   font-size:16px;
+    	background:#ccc;
+    	float:left;
+    }
+    .queding_cf{
+    	width:40%;
+    	height:100%;
+    	border:none;
+    	border-radius:6px;
+    	color:#fff;
+    	text-align:center;
+    	background:#4CC34C;
+    	float:right;
+    	font-size:16px;
+    }

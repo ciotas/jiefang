@@ -1,0 +1,22 @@
+
+.conf_box{width:100%;-webkit-box-orient:vertical;}
+.flex_box{display:box;display:-webkit-box;display:-moz-box;}
+.flex_a{box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;}
+
+.businesses{padding:10px 0;overflow-y: auto;-webkit-overflow-scrolling: touch;}
+.conf_list{padding:5px 10px;}
+.conf_list span{height:25px;line-height:25px;display: block;width:80px;text-align:left;font-size:13px;}
+.conf_main{padding-left:10px;}
+.conf_main font{display:block;height:25px;width:33.3%;padding-right:3px;box-sizing: border-box;float: left;}
+.conf_main font:last-child{padding-right:0;}
+.conf_main font select{ width:100%; height:25px;border:1px solid #ccc;}
+
+.conf_main input[type="text"]{border:1px solid #ccc;width:100%;box-sizing: border-box; height:25px; line-height:25px;text-indent:10px;outline:none;-webkit-appearance:none;}
+
+.conf_main input[type="radio"]{width:15px; height:15px;-webkit-appearance:none;border:1px solid #ccc;border-radius:50%;outline:none;}
+.conf_main em{display:block;float:left; margin-right:10px;width:62px; height:25px; line-height:25px;}
+.conf_main  em.on input{background:#5ca992;border:1px solid #5ca992;}
+
+.conf_main label{ display:inline-block;vertical-align: middle;margin-left:5px;}
+
+.conf_main textarea{width:100%;resize:none;-webkit-appearance:none;border:1px solid #ccc;box-sizing:border-box;padding:5px;}

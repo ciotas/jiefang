@@ -1,0 +1,80 @@
+*{
+	margin:0;
+	padding:0;
+}
+.bgs{
+	width: 100%;
+	overflow: visible;
+	border:1px solid white;
+/* 	margin-top:50px; */
+		box-sizing: border-box;
+}
+.bgs .heads{
+	width:100%;
+	height:1.5rem;
+	background-color: #C3C3C3;
+	position: fixed;
+}
+.jilus{
+	width:90%;
+	height:2rem;
+	margin-left: 5%;
+	border-bottom:1px solid #E5E5E5;
+/*	border:1px solid red;*/
+	line-height: 2rem;
+}
+.headh{
+	width:101%;
+	margin-left: 0;
+	border-bottom:none;
+	position:fixed;
+	background-color:#E5E5E5;
+	top:-2px;
+	left:-1px;
+	height:2.1rem;
+}
+.jilus div{
+	display: inline-block;
+	width:72%;
+	text-align: right;
+	box-sizing: border-box;
+	font-size:0.9rem;
+}
+.jilus .riqis{
+	text-align: left;
+	color:#888;
+	font-size:0.8rem;
+}
+.jilus .jutis{
+	width:25%;
+	text-align: center;
+	color:#545454;
+}
+.jilus .ri{
+	font-size:0.9rem;
+	color:#000;
+	padding-left: 1rem;
+}
+.jilus .ju{
+	color:#000;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

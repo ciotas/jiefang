@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+<link rel="stylesheet" type="text/css" href="../media/css/public1.css">
+<link rel="stylesheet" type="text/css" href="../media/css/style.css">
+<link rel="stylesheet" type="text/css" href="../media/css/mdatetimer.css">
+
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<title>订单确认-员工自助</title>
+</head>
+	
+<body style="background:#fff;">
+	
+<div class="conf_box flex_box">
+	
+	<div class="prompt">员工自助</div>
+	<div class="businesses  flex_a ">
+		<div class="conf_list flex_box">
+			<span>配&nbsp;送&nbsp;方&nbsp;式：</span>
+			<div class="conf_main flex_a">
+				<em><input type="radio" name="play" id="play_k" /><label for="play_k">出库单</label></em>
+				<em><input type="radio" name="play" id="play_s"  /><label for="play_s">送货单</label></em>
+			</div>
+		</div>	
+
+		<div class="conf_list flex_box">
+			
+			<span>配&nbsp;送&nbsp;方&nbsp;式：</span>
+			<div class="conf_main flex_a">
+				<em><input type="radio" name="distribution" id="distribution_k"  /><label for="distribution_k">配送</label></em>
+				<em><input type="radio" name="distribution" id="distribution_z"  /><label for="distribution_z">自提</label></em>
+			</div>
+		</div>	
+		
+
+		<div class="conf_list flex_box">
+			<span>下&nbsp;&nbsp;&nbsp;单&nbsp;&nbsp;&nbsp;人：</span>
+			<div class="conf_main flex_a">
+				<input type="text" />
+			</div>
+		</div>	
+
+		<div class="conf_list flex_box">
+			<span>车&nbsp;&nbsp;&nbsp;牌&nbsp;&nbsp;&nbsp;号：</span>
+			<div class="conf_main flex_a">
+				<input type="text" />
+			</div>
+		</div>			
+
+		<div class="conf_list flex_box">
+			<span>提&nbsp;送&nbsp;时&nbsp;间：</span>
+			<div class="conf_main flex_a">
+				<input type="text" id="tipicktime" value="2015-07-01" readonly />
+			</div>
+		</div>	
+
+
+		<div class="conf_list flex_box">
+			<span>商&nbsp;户&nbsp;名&nbsp;称：</span>
+			<div class="conf_main flex_a">
+				<input type="text"  />
+			</div>
+		</div>	
+
+		
+
+		<div class="conf_list flex_box">
+			<span>联&nbsp;&nbsp;&nbsp;系&nbsp;&nbsp;&nbsp;人：</span>
+			<div class="conf_main flex_a">
+				<input type="text" />
+			</div>
+		</div>
+
+		<div class="conf_list flex_box">
+			<span>电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话：</span>
+			<div class="conf_main flex_a">
+				<input type="tel" />
+			</div>
+		</div>	
+		
+		<div class="conf_list flex_box">
+			<span>地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</span>
+			<div class="conf_main flex_a"  id="city">
+				<font>
+					<select class="prov"></select>
+				</font>
+				<font>
+					<select class="city"></select>
+				</font>
+				<font>
+					<select  class="dist"></select>
+				</font>
+			</div>
+		</div>		
+
+
+		<div class="conf_list flex_box">
+			<span>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</span>
+			<div class="conf_main flex_a">
+				<textarea></textarea>
+			</div>
+		</div>	
+
+		
+	</div>
+
+	
+</div>	
+
+<script type="text/javascript" src="../media/js/zepto.min.js"></script>
+<script type="text/javascript" src="../media/js/cityselect.js"></script>
+
+<script type="text/javascript" src="../media/js/mdatetimer.js"></script>
+
+
+
+<script type="text/javascript">
+	$(function(){
+		$("#city").citySelect({
+			prov:"浙江", 
+	    	city:"杭州",
+			dist:"西湖区",
+			nodata:"none"
+
+		}); 
+
+
+		$('#tipicktime').mdatetimer({
+			mode : 3, //时间选择器模式：1：年月日，2：年月日时分（24小时），3：年月日时分（12小时），4：年月日时分秒。默认：1
+			format : 2, //时间格式化方式：1：2015年06月10日 17时30分46秒，2：2015-05-10  17:30:46。默认：2
+			years : [2000, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017], //年份数组
+			nowbtn : true, //是否显示现在按钮
+			onOk : function(){
+				//alert('OK');
+			},  //点击确定时添加额外的执行函数 默认null
+			onCancel : function(){
+				
+			}, //点击取消时添加额外的执行函数 默认null
+		});	
+
+		$('.conf_main em').on('click',function(){
+			$(this).addClass('on').siblings().removeClass('on');
+		})
+	});
+
+</script>	
+	
+</body>
+</html>

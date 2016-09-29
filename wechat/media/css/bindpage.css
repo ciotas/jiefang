@@ -1,0 +1,145 @@
+*{
+	margin:0;
+	padding: 0;
+}
+ul,ol{
+	list-style-type: none;
+}
+body{
+	background: linear-gradient(150deg,rgb(0,229,195),rgb(0,159,239));
+}
+.weibo .header{
+	margin:0px auto;
+	position:relative;
+}
+
+.weibo .bg_login{
+	width:300px;
+	height:310px;
+	background:black;
+	opacity:0.3;
+	border-radius:4px;
+	position:absolute;
+	left:50%;
+	top:81px;
+	margin-left:-150px;
+}
+.weibo .header .login{
+	width:300px;
+	height:310px;
+	top:81px;
+	left:50%;
+	position:absolute;
+	margin-left:-150px;
+}
+.login ul{
+	height:42px;
+	width:273px;
+	border-bottom:1px #aa988b solid;
+	margin-left:16px;
+}
+.login ul li{
+	height:40px;
+	float:left;
+	font-size:16px;
+	text-align:center;
+	line-height:40px;
+	color:#c1bdba;
+}
+.login ul li.one{
+	width:123px;
+	border-bottom:3px #fa7d3c solid;
+}
+.login .name,.login .password{
+	padding-left:34px;
+	width:234px;
+	height:40px;
+	border-radius:4px;
+	color:#999;
+	border:2px solid #7a98a2;
+	outline:none;
+	font-size:16px;
+}
+.login .name{
+	margin-top:20px;
+	margin-left:16px;
+}
+.login .password{
+	margin-top:10px;
+	margin-left:16px;
+}
+.login .name_tubiao{
+	height:40px;
+	width:18px;
+	background:url('../images/user.png');
+	position:absolute;
+	top:65px;
+	left:28px;
+}
+.login .password_tubiao{
+	height:38px;
+	width:18px;
+	background:url('../images/password.png');
+	position:absolute;
+	top:120px;
+	left:28px;
+}
+.login .login_btn{
+	width:272px;
+	height:40px;
+	background:#ff6600;
+	border-radius:4px;
+	font-size:16px;
+	color:white;
+	outline:none;
+	border:1px #ff6600 solid;
+	position:absolute;
+	top:195px;
+	left:17px;
+	cursor:pointer;
+}
+.fengexian{
+	border-bottom:1px #aa988b solid;
+	width:273px;
+	position:absolute;
+	top:240px;
+	left:17px;
+	top:270px;
+}
+.other{
+	color:#ccc;
+	font-size:12px;
+	position:absolute;
+	top:278px;
+	/*left:30%;*/
+	width:100%;
+	text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

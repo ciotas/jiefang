@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no">
+	<meta content="telephone=no" name="format-detection" />
+	<title>棋牌室</title>
+	<link rel="stylesheet" type="text/css" href="../media/css/chessroom.css">
+	<script type="text/javascript" src="../media/js/muis.js"></script>
+</head>
+<body>
+	<div class="boxm">
+		<div class="partm1" style="background-image:url('http://jiefang-img.oss-cn-hangzhou.aliyuncs.com/hyp/chess.jpg')"></div>
+		<div class="partm2">
+			<!-- 阴影层 -->
+			<!-- <div class="bgm"></div> -->
+			<h1>棋牌室</h1>
+			<div class="btnsm">
+				<div class="fangm">房间预订</div>
+				<div class="meim">美食酒水</div>
+			</div>
+			<div></div>
+			<div class="addressm">
+				<div class="addrs"></div>
+				<div class="addrm">古翠路和天目山路交叉口</div>
+			</div>
+			<div class="numm">
+				<div class="lines"></div>
+				<div class="linem">18888888888</div>
+			</div>
+			<div class="gongsim">杭州点霸网络科技有限公司</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../media/js/jquery-2.2.1.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$(".fangm").on('click',function(){
+				// 跳转到房间预订
+				window.location.href = "reservation.html";
+			});
+			$(".meim").on('click',function(){
+				// 跳转到美食预订
+				window.location.href = "menu.php";
+			});
+		})
+	</script>
+</body>
+</html>

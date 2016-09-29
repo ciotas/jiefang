@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<link rel="stylesheet" type="text/css" href="../media/css/public.css">
+<script type="text/javascript" src="../media/js/zepto.min.js"></script>
+
+<title>保存菜品</title>
+</head>
+    
+<body>
+<div class="dis-wrapp">
+    <div class="change">
+        <div class="dishes">
+            <div class="dishes-top">
+                <a  href="#">加菜</a>菜品
+            </div>
+            
+            <ul class="dishes-ul" id="dishesUl">
+                
+            </ul>
+        </div>
+    </div>
+    <div class="dis-bottom">保存商品</div>
+</div>
+    
+<div class="dis-alert" id="disAlert">
+    <div class="dis-alert-wrapp">
+        <div class="dis-top">
+            <div class="dis-alert-wrapper" id="disAlertWrapper">
+            </div>
+        </div>
+        <div class="dis-alert-bottom">
+            <a href="javascript:;" class="no" id="no">不要了</a> 
+            <a href="javascript:;" class="selected" id="selected">选好了</a> 
+        </div>
+    </div>
+</div>  
+
+    <script type="text/javascript">
+         var disArrayList;
+        var disArray;//用来储存选中的口味值
+    
+        if(localStorage.getItem("dis")){
+            disArrayList=$.parseJSON(localStorage.getItem("dis"));
+        }else{
+            disArrayList=[];
+        }
+
+        var dishesList=[
+            {
+                id:0,
+                name:"黑胡椒煎美式小牛肉厚切佐沙律200克",
+                num:2,
+                price:"￥138",
+                isdis:true,
+
+            },
+            {
+                id:1,
+                name:"烧原只春鸡",
+                num:3,
+                price:"￥147",
+                isdis:false
+            }
+
+        ]
+
+        var dishes='';
+        for(var i=0;i<dishesList.length;i++){
+            dishes+='<li >'+
+            '<div class="dishes-box">'+
+                '<div class="dishes-name">'+dishesList[i].name+'</div>'+
+                '<div class="dishes-num">x'+dishesList[i].num+'</div>'+
+            '</div>'+
+            '<div class="dis-kw">';
+            if(dishesList[i].isdis){
+                 dishes+='<a href="javascript:;" class="hunanese istrue" index="'+dishesList[i].id+'">口味</a>'
+            }else{
+                  dishes+='<a href="javascript:;" class="hunanese isfalse" index="'+dishesList[i].id+'">口味</a>'
+            };
+            dishes+= '<span>'+dishesList[i].price+'</span></div></li>';
+        }
+
+        $('#dishesUl').append(dishes);
+
+        var disList={
+            id:0,
+            name:"黑胡椒煎美式小牛肉厚切佐沙律200克",
+            classify:["非冰","少冰","非豆","少豆"]
+        }
+        
+
+
+
+       
+        
+        function view(obj){
+            var html="";
+             html+='<div class="dis-alert-top">'+
+                '<h2>'+obj.name+'</h2>'+
+                '<input type="hidden" value="'+obj.id+'"/>'+
+                '<p>已选：<span id="disName">';
+                if(obj.checked){
+                    for(var i=0;i<obj.checked.length;i++){
+                       html+='<font>'+obj.checked[i]+'</font>';
+                    }
+                }
+                html+='</span></p></div>'+
+                '<div class="dis-alert-main">'+
+                '<div class="dis-name">口味</div>'+
+                '<ul class="dis-ul" id="disUl">';
+               w:for(var i=0;i<obj.classify.length;i++){
+                    if(obj.checked){
+                        for(var j=0;j<obj.checked.length;j++){
+                            if(obj.classify[i]==obj.checked[j]){
+                              html+='<li><span><input type="checkbox" checked name="dis" value="'+obj.classify[i]+'"  id="dis_'+i+'" /><label for="dis_'+i+'">'+obj.classify[i]+'</label></span></li>';
+                               continue w;
+                            }
+                        }
+                    }
+                    html+='<li><span><input type="checkbox"  name="dis" value="'+obj.classify[i]+'"  id="dis_'+i+'" /><label for="dis_'+i+'">'+obj.classify[i]+'</label></span></li>' 
+                }
+                html+='</ul></div>';
+            $('#disAlertWrapper').append(html);
+            $('#disAlert').show();
+        }
+
+        
+        $('.hunanese').on('click',function(){
+            $('#disAlertWrapper').html('');
+            var id=$(this).attr('index');
+            if(disArrayList.length>0){ //转换成jsonoObJ对象){
+                //如果有值
+                for(var i=0;i<disArrayList.length;i++){
+                    for(var key in disArrayList[i]){
+                        if(id==key){
+                           view(disArrayList[i][key]);
+                           return;
+                        }
+                    }
+                }     
+            }else{
+                view(disList);
+            }
+        });
+
+        //不要了
+        $("#no").on('click',function(){
+            var id=$('input[type="hidden"]').val();  //获取id
+            $('#disUl li').each(function(i){
+                if($(this).find('input').prop('checked')){
+                    $(this).find('input').prop("checked",false)
+                }
+            });
+            if(disArrayList.length>0){
+                //如果存在缓存的数据
+                for(var i=0;i<disArrayList.length;i++){
+                    for(var key in disArrayList[i]){
+                        if(id==key){
+                            disArrayList[i][key]["checked"]=[];
+                        }
+                   }
+                }
+            }
+            $('#disAlert').hide();
+        });
+        
+        //选择食物
+        $(document).on("click",'#disUl span',function(e){
+            if(e.target.tagName!="INPUT"){
+                return;
+            }
+            disArray=[]; 
+            $("#disName").html('');
+            $('#disUl li').each(function(i){
+               if($(this).find('input').prop('checked')){
+                    var val=$(this).find('input').val(); 
+                    disArray.push(val);
+                }
+            });
+           var html="";
+            for(var i=0;i<disArray.length;i++){
+                html+='<font>'+disArray[i]+'</font>'
+            }  
+            $("#disName").append(html); 
+        })
+
+        //点击选好了。
+        $("#selected").on('click',function(){
+            var id=$('input[type="hidden"]').val();  //获取id
+            var obj={};
+            if(disArrayList.length>0){
+                for(var i=0;i<disArrayList.length;i++){
+                    for(var key in disArrayList[i]){
+                        if(id==key){
+                             //说明有这个
+                           disArrayList[i][key]["checked"]=disArray;
+                        }
+                    }
+                }
+            }else{
+                disList["checked"]=disArray;
+                obj[id]=disList;
+                disArrayList.push(obj);
+            }
+            var str=JSON.stringify(disArrayList);
+            localStorage.setItem('dis',str);
+            $('#disAlert').hide();
+        });
+
+      // localStorage.removeItem("dis");
+
+
+    </script>
+</body>
+</html> 

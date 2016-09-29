@@ -1,0 +1,1 @@
+cooktype=[{'foodid':'111','cooktype':'蒸、煮'},{'foodid':'222','cooktype':'蒸、煮、炸'}];
